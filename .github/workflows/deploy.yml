@@ -1,0 +1,30 @@
+name: AutomaticHost
+on:
+  push:
+    branches: 
+      - dev
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+    - run: |
+        npm ci
+        npm run build
+    - run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git checkout --orphan master
+        git reset
+        git add dist/* -f
+        git mv dist/* ./ -k
+        git commit -m "Update hosted version"
+    - uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        force: true
+        branch: master
+        
