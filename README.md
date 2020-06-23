@@ -1,4 +1,4 @@
-# JacobBusfield.github.io
+# Guitar
 
 ## Project setup
 
