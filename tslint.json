@@ -16,5 +16,6 @@
     "ordered-imports": false,
     "quotemark": [true, "single"],
     "no-bitwise": false,
+    "variable-name": false
   }
 }
