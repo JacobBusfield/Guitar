@@ -122,7 +122,7 @@ export default class Guitar {
     E_MINOR: number[];
   };
   public audio: Audio;
-  private strings: GuitarString[];
+  public strings: GuitarString[];
   private _stringTension: number;
   private _characterVariation: number;
   private _stringDamping: number;
