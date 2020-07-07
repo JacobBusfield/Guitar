@@ -2,14 +2,10 @@ import _Guitar from './Guitar.ts'
 import _Audio from './Audio.ts'
 
 
-var Audio = new _Audio()
-var guitar = new _Guitar(Audio)
+var audio = new _Audio()
+var guitar = new _Guitar(audio)
+var isPlaying = false
 
-
-function toggleGuitarPlaying() {
-	//TODO: fix
-	startGuitarPlaying();
-}
 
 function updateStringDamping(value) {
 	guitar.stringDamping = value
@@ -66,11 +62,9 @@ function queueStrums(sequenceN, blockStartTime, chordIndex, precacheTime) {
 		guitar.chords.E_MINOR
 	];
 
-	// TODO: put exit on here!
-	// var playState = document.getElementById("playState").value;
-	// if (playState == "stopped") {
-	// 	return;
-	// }
+	if (!isPlaying) {
+		return;
+	}
 
 	var curStrumStartTime;
 
@@ -141,7 +135,7 @@ function queueStrums(sequenceN, blockStartTime, chordIndex, precacheTime) {
 
 	// if we're only generating the next strum 200 ms ahead of the current time,
 	// we might be falling behind, so increase the precache time
-	if (curStrumStartTime - Audio.currentTime < 0.2) {
+	if (curStrumStartTime - audio.currentTime < 0.2) {
 		precacheTime += 0.1;
 	}
 
@@ -149,7 +143,7 @@ function queueStrums(sequenceN, blockStartTime, chordIndex, precacheTime) {
 	// has finished generated and when it actually plays
 	// the next strum will be played at curStrumStartTime; so start
 	// generating the one after the next strum at precacheTime before
-	var generateIn = curStrumStartTime - Audio.currentTime - precacheTime;
+	var generateIn = curStrumStartTime - audio.currentTime - precacheTime;
 	if (generateIn < 0)
 		generateIn = 0;
 
@@ -160,16 +154,22 @@ function queueStrums(sequenceN, blockStartTime, chordIndex, precacheTime) {
 }
 
 function startGuitarPlaying() {
+	isPlaying = true
 	var startSequenceN = 0;
-	var blockStartTime = Audio.currentTime;
+	var blockStartTime = audio.currentTime;
 	var startChordIndex = 0;
 	var precacheTime = 0.0;
 	queueStrums(startSequenceN, blockStartTime, startChordIndex, precacheTime);
 }
 
+function stopGuitarPlaying() {
+	isPlaying = false
+}
+
 
 export {
-	toggleGuitarPlaying,
+	startGuitarPlaying,
+	stopGuitarPlaying,
 	updateStringDamping,
 	updateStringDampingVariation,
 	updateStringDampingCalculation,

@@ -1,7 +1,9 @@
 <template>
   <Page>
     <div class="audiocontrols">
-      <v-btn color="primary" @click="toggleGuitarPlaying()" block style="margin-top: 20px; margin-bottom: 20px;">Play!
+      <v-btn color="primary" @click="togglePlay()" block style="margin-top: 20px; margin-bottom: 20px;">
+        <span v-if="isPlaying">Stop!</span>
+        <span v-else>Play!</span>
       </v-btn>
 
       <v-slider v-model="stringTension" @change="updateStringTension(stringTension)" label="String Tension" min="0"
@@ -42,7 +44,8 @@
   import Page from '@/components/Page.vue'
 
   import {
-    toggleGuitarPlaying,
+    startGuitarPlaying,
+    stopGuitarPlaying,
     updateStringDamping,
     updateStringDampingVariation,
     updateStringDampingCalculation,
@@ -71,8 +74,11 @@
         stringDampingCalculation: 'magic',
         body: 'simple',
 
+        isPlaying: false,
+
         //methods
-        toggleGuitarPlaying: toggleGuitarPlaying,
+        startGuitarPlaying: startGuitarPlaying,
+        stopGuitarPlaying: stopGuitarPlaying,
         updateStringDamping: updateStringDamping,
         updateStringDampingVariation: updateStringDampingVariation,
         updateStringDampingCalculation: updateStringDampingCalculation,
@@ -84,7 +90,17 @@
         updateBody: updateBody,
       }
     },
-    methods: {}
+    methods: {
+      togglePlay() {
+        if (this.isPlaying) {
+          this.stopGuitarPlaying()
+        } else {
+          this.startGuitarPlaying()
+        }
+
+        this.isPlaying = !this.isPlaying
+      }
+    }
   };
 </script>
 
