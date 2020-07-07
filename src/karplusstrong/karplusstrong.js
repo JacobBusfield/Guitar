@@ -16,6 +16,14 @@ function stopGuitarPlaying() {
 	sequencer.stopGuitarPlaying()
 }
 
+function updateCords(cords) {
+	sequencer.updateCords(cords)
+}
+
+function getChords() {
+	return Object.keys(guitar.chords)
+}
+
 function updateStringDamping(value) {
 	guitar.stringDamping = value
 }
@@ -40,6 +48,10 @@ function updateStereoSpread(value) {
 	guitar.stereoSpread = value
 }
 
+function updateTimeUnit(value) {
+	sequencer.timeUnit = value
+}
+
 function updatePluckDamping(value) {
 	guitar.stringPluckDamping = value;
 }
@@ -56,13 +68,16 @@ function updateBody(value) {
 export {
 	startGuitarPlaying,
 	stopGuitarPlaying,
+	updateCords,
 	updateStringDamping,
 	updateStringDampingVariation,
 	updateStringDampingCalculation,
 	updateStringTension,
 	updateCharacterVariation,
 	updateStereoSpread,
+	updateTimeUnit,
 	updatePluckDamping,
 	updatePluckDampingVariation,
-	updateBody
+	updateBody,
+	getChords
 }

@@ -6,6 +6,16 @@
         <span v-else>Play!</span>
       </v-btn>
 
+      <v-card class="d-flex flex-wrap justify-center" color="grey lighten-2" flat tile
+        style="padding-top: 20px; margin-bottom: 10px;">
+        <v-flex shrink v-for="(chord, index) in chords">
+          <v-container style="max-width: 140px;">
+            <v-select v-model="localChords[index]" :label="'chord-' + (index + 1)" :items="ALL_CHORDS" dense
+              @change="updateChordsArray()"></v-select>
+          </v-container>
+        </v-flex>
+      </v-card>
+
       <v-slider v-model="stringTension" @change="updateStringTension(stringTension)" label="String Tension" min="0"
         max="1" step="0.1">
       </v-slider>
@@ -27,6 +37,9 @@
       <v-slider v-model="stereoSpread" @change="updateStereoSpread(stereoSpread)" label="Stereo Spread" min="0" max="1"
         step="0.1">
       </v-slider>
+      <v-slider v-model="timeUnit" @change="updateTimeUnit(timeUnit)" label="Time Step" min="0.08" max="0.20"
+        step="0.01">
+      </v-slider>
       <v-radio-group label="String Damping Calculation" v-model="stringDampingCalculation"
         @change="updateStringDampingCalculation(stringDampingCalculation)" row>
         <v-radio label="Magic" value="magic"></v-radio>
@@ -46,15 +59,18 @@
   import {
     startGuitarPlaying,
     stopGuitarPlaying,
+    updateCords,
     updateStringDamping,
     updateStringDampingVariation,
     updateStringDampingCalculation,
     updateStringTension,
     updateCharacterVariation,
     updateStereoSpread,
+    updateTimeUnit,
     updatePluckDamping,
     updatePluckDampingVariation,
-    updateBody
+    updateBody,
+    getChords
   } from '@/karplusstrong/karplusstrong.js'
 
   export default {
@@ -71,23 +87,41 @@
         pluckDamping: 0.5,
         pluckDampingVariation: 0.45,
         stereoSpread: 1,
+        timeUnit: 0.12,
         stringDampingCalculation: 'magic',
         body: 'simple',
 
         isPlaying: false,
 
-        //methods
+        //updates
         startGuitarPlaying: startGuitarPlaying,
         stopGuitarPlaying: stopGuitarPlaying,
+        updateCords: updateCords,
         updateStringDamping: updateStringDamping,
         updateStringDampingVariation: updateStringDampingVariation,
         updateStringDampingCalculation: updateStringDampingCalculation,
         updateStringTension: updateStringTension,
         updateCharacterVariation: updateCharacterVariation,
         updateStereoSpread: updateStereoSpread,
+        updateTimeUnit: updateTimeUnit,
         updatePluckDamping: updatePluckDamping,
         updatePluckDampingVariation: updatePluckDampingVariation,
         updateBody: updateBody,
+
+        // TODO: move chords selector out into new component - to remove some of this complexity.
+        chords: [
+          "C_MAJOR",
+          "G_MAJOR",
+          "A_MINOR",
+          "E_MINOR",
+        ],
+        localChords: [
+          "C_MAJOR",
+          "G_MAJOR",
+          "A_MINOR",
+          "E_MINOR",
+        ],
+        ALL_CHORDS: getChords()
       }
     },
     methods: {
@@ -99,8 +133,12 @@
         }
 
         this.isPlaying = !this.isPlaying
+      },
+      updateChordsArray() {
+        this.chords = this.localChords
+        this.updateCords(this.chords)
       }
-    }
+    },
   };
 </script>
 
