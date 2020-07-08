@@ -116,10 +116,15 @@ export default class Guitar {
   }
 
   public chords: {
-    C_MAJOR: number[];
-    G_MAJOR: number[];
+    A_MAJOR: number[];
     A_MINOR: number[];
+    C_MAJOR: number[];
+    C_MINOR: number[];
+    D_MAJOR: number[];
+    D_MINOR: number[];
+    E_MAJOR: number[];
     E_MINOR: number[];
+    G_MAJOR: number[];
   };
   public audio: Audio;
   public strings: GuitarString[];
@@ -148,10 +153,15 @@ export default class Guitar {
     // (logarithmically, one-twelth of an octave)
     // -1: don't pluck that string
     this.chords = {
-      C_MAJOR: [-1, 3, 2, 0, 0, 0],
+      A_MAJOR: [0, 0, 2, 2, 2, 0],
+      A_MINOR: [0, 0, 2, 2, 1, 0],
+      C_MAJOR: [-1, 3, 2, 0, 1, 0],
+      C_MINOR: [-1, 1, 3, 3, 2, 1],
+      D_MAJOR: [-1, 0, 0, 2, 3, 2],
+      D_MINOR: [-1, 0, 0, 2, 3, 1],
+      E_MAJOR: [0, 2, 2, 1, 0, 0],
+      E_MINOR: [0, 2, 2, 0, 0, 0],
       G_MAJOR: [3, 2, 0, 0, 0, 3],
-      A_MINOR: [0, 0, 2, 2, 0, 0],
-      E_MINOR: [0, 2, 2, 0, 3, 0],
     };
 
     this.audio = audioref;
