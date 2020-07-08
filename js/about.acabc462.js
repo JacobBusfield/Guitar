@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["about"],{f820:function(t,n,e){"use strict";e.r(n);var o=function(){var t=this,n=t.$createElement,e=t._self._c||n;return e("Page",[e("div",{staticStyle:{"padding-top":"50px","font-size":"20px","font-weight":"400"}},[t._v(" About page under construction.. ")])])},a=[],u=e("9973"),c={name:"About",components:{Page:u["a"]}},i=c,p=e("2877"),s=Object(p["a"])(i,o,a,!1,null,null,null);n["default"]=s.exports}}]);
+//# sourceMappingURL=about.acabc462.js.map
